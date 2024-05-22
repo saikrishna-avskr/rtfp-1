@@ -2,11 +2,13 @@
 <html>
 
 <head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
 </head>
 
 <body>
@@ -23,7 +25,7 @@
         <li><a href="#">Orders</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="{% url 'cart:show_cart' %}">View Cart</a></li>
+        <li><a href="{% url 'cart:show_cart' %}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> View Cart</a></li>
       </ul>
     </div>
   </nav>
@@ -70,9 +72,9 @@
               <td>{{x.price}}</td>
               <td><img src="{{ x.image }}" alt="image" style="width:100px;height:100px;"></td>
               {% if x in incart %}
-              <td><a class="btn btn-primary disabled">Added to Cart</a></td>
+              <td><a class="btn btn-primary disabled"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> &nbspAdded to Cart</a></td>
               {% else %}
-              <td><a href="{% url 'cart:add_to_cart' x.pid %}" class="btn btn-warning ">Add to Cart</a></td>
+              <td><a href="{% url 'cart:add_to_cart' x.pid %}" class="btn btn-warning "> <i class="fa fa-cart-plus" aria-hidden="true"></i> &nbsp Add to Cart</a></td>
               {% endif %}
             </tr>
             {% endfor %}
@@ -87,7 +89,7 @@
       
       <div class="col-lg-2">      </div>
       <div class="col-lg-">
-        <a href="{% url 'products:low_stock' %}" class="btn btn-info active">Low Stock &nbsp;&nbsp; &nbsp;</a>
+        <a href="{% url 'products:low_stock' %}" class="btn btn-info active"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;  Low Stock &nbsp;<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> </a>
       </div>
     </div>
     <div class="col-lg-8">
@@ -109,7 +111,7 @@
               <td>{{ x.generic_name }}</td>
               <td>{{x.stock}}</td>
               <td><img src="{{ x.image }}" alt="image" style="width:100px;height:100px;"></td>
-              
+              <td><a href="/admin/products/product/{{ x.pid }}/change/" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Update</a></td>
             </tr>
             {% endfor %}
           </table>
@@ -123,7 +125,7 @@
       
       <div class="col-lg-2">      </div>
       <div class="col-lg-">
-        <a href="{% url 'products:find_exp_items' %}" class="btn btn-info active">Expired items &nbsp;&nbsp; &nbsp;</a>
+        <a href="{% url 'products:find_exp_items' %}" class="btn btn-info active"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Expired items <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>
       </div>
     </div>
     <div class="col-lg-8">
@@ -144,9 +146,10 @@
               <th scope="row">{{ x.pid }}</th>
               <td>{{ x.name }}</td>
               <td>{{ x.generic_name }}</td>
-              <td>{{x.expiry}}</td>
+              <td>{{x.expiry_date}}</td>
               <td>{{x.stock}}</td>
               <td><img src="{{ x.image }}" alt="image" style="width:100px;height:100px;"></td>
+              <td><a href="{% url 'products:remove_product' x.pid %}" class="btn btn-danger">Delete</a></td>
             </tr>
             {% endfor %}
           </table>
@@ -154,5 +157,10 @@
     </div>
     
   </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
 </body>
 </html>
