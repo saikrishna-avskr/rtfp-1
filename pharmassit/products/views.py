@@ -26,11 +26,6 @@ def details(request):
         dat = Cart.objects.values('product')
         to_find=[i['product'] for i in dat]
         data = Product.objects.filter(pid__in=to_find).values()        
-        #data=[i['product'] for i in dat]
-        print(data)
-        print("\n\n")
-        print(mydata)
-        
         context = {
             'myproducts': mydata,
             'incart': data,
@@ -42,12 +37,9 @@ def details(request):
 
 def find_exp_items(request):
     today = datetime.today()
-    last_month = today - relativedelta(months=1)
+    last_month = today + relativedelta(months=1)
     f_date=last_month.date()
-    formatted_date = f_date.strftime('%d-%m-%Y')
-    #print(formatted_date)
-    data = Product.objects.filter(expiry_date__lt=formatted_date).values()
-    template = loader.get_template('details.html')
+    data = Product.objects.filter(expiry_date__lt=f_date).values()
     context = {
         'exp_products': data,
     }
@@ -55,8 +47,13 @@ def find_exp_items(request):
 
 def low_stock(request):
     data = Product.objects.filter(stock__lt=10).values()
-    template = loader.get_template('details.html')
     context = {
         'lowproducts': data,
     }
     return render(request,'details.html',context)
+
+def remove_product(request,pid):
+    id=pid
+    prod=Product.objects.get(pid=id)
+    prod.delete()
+    return redirect('products:details')
