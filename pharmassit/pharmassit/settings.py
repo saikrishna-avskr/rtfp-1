@@ -77,8 +77,16 @@ WSGI_APPLICATION = 'pharmassit.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',  
+        'NAME': 'pharmassist',                     
+        'USER': 'avnadmin',
+        'PASSWORD': 'AVNS_fiPeV_A5GVfBKGw81Cf',
+        'HOST': 'mysql-3cda93f-pharmassist.i.aivencloud.com', 
+        'PORT': '27768',
+        'OPTIONS':  {
+            'ssl': {'ssl-ca': BASE_DIR/'ca.pem',
+            }
+        }
     }
 }
 
