@@ -12,13 +12,13 @@ def add_to_cart(request,pid):
     quantity=1
     prod=Product.objects.get(pid=id)
     Cart.objects.create(product=prod,quantity=1,pid=prod.pid,price=prod.price)
-    print(id)
     return redirect('products:details')
 
 def remove_from_cart(request,pid):
     id=pid
     prod=Product.objects.get(pid=id)
     Cart.objects.filter(product=prod).delete()
+    messages.success(request, 'Product removed from cart successfully')
     return redirect('cart:show_cart')
 
 def show_cart(request):
