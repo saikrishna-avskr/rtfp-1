@@ -80,9 +80,9 @@
               <td>{{x.price}}</td>
               <td><img src="{{ x.image }}" alt="image" style="width:100px;height:100px;"></td>
               {% if x in incart %}
-              <td><a class="btn btn-primary disabled"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> &nbspAdded to Cart</a></td>
+              <td><a class="btn btn-primary disabled"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> &nbsp;Added to Cart</a></td>
               {% else %}
-              <td><a href="{% url 'cart:add_to_cart' x.pid %}" class="btn btn-warning "> <i class="fa fa-cart-plus" aria-hidden="true"></i> &nbsp Add to Cart</a></td>
+              <td><a href="{% url 'cart:add_to_cart' x.pid %}" class="btn btn-warning "> <i class="fa fa-cart-plus" aria-hidden="true"></i> &nbsp; Add to Cart</a></td>
               {% endif %}
             </tr>
             {% endfor %}
@@ -146,6 +146,7 @@
               <th scope="col" >Name</th>
               <th scope="col" >Generic Name</th>
               <th scope="col" >Expiry</th>
+              <th scope="col" >Location</th>
               <th scope="col" >Stock</th>
               <th scope="col" >Image</th>
             </tr>
@@ -155,6 +156,7 @@
               <td>{{ x.name }}</td>
               <td>{{ x.generic_name }}</td>
               <td>{{x.expiry_date}}</td>
+              <td>{{x.storage_loc}}</td>
               <td>{{x.stock}}</td>
               <td><img src="{{ x.image }}" alt="image" style="width:100px;height:100px;"></td>
               <td><a href="{% url 'products:remove_product' x.pid %}" class="btn btn-danger">Delete</a></td>
