@@ -23,10 +23,5 @@ def tesseract():
     Imagepath = 'test1.jpg'
     #pytesseract.tesseract_cmd=pathtotess
     text=pytesseract.image_to_string(Image.open(Imagepath))
-    print(text[:-1])
-    Name=[]
-    text.split("\n")
-    for i in text:
-        if "mg" in i:
-            Name = Name.append(i)
-    print(Name)
+    print(text)
+    
