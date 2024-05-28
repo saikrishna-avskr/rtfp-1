@@ -5,7 +5,7 @@ font_scale=1.5
 font = cv2.FONT_HERSHEY_PLAIN
 import pytesseract
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
-cap=cv2.VideoCapture(1)
+cap=cv2.VideoCapture(0)
 #cap.set(cv2.CAP_PROP_FPS,170)
 
 if not cap.isOpened():
@@ -25,6 +25,7 @@ while True:
 
         x1,y1,w1,h1=0,0,imgH,imgW
         imgchar=pytesseract.image_to_string(frame)
+        print(imgchar)
         imgboxes=pytesseract.image_to_boxes(frame)
         for boxes in imgboxes.splitlines():
             boxes=boxes.split(' ')
