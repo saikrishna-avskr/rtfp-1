@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.template import loader
+from django.db.models import Q
 from .models import Product
 from cart.models import Cart
 from django.views.decorators.csrf import csrf_exempt
@@ -21,7 +22,7 @@ def details(request):
         if name == 'all':
             mydata = Product.objects.all().values()
         else:  
-            mydata = Product.objects.filter(name__icontains=name).values()
+            mydata = Product.objects.filter(Q(name__icontains=name) | Q(generic_name__icontains=name)).values()
         template = loader.get_template('details.html')
         dat = Cart.objects.values('product')
         to_find=[i['product'] for i in dat]
