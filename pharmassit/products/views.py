@@ -58,3 +58,5 @@ def remove_product(request,pid):
     prod=Product.objects.get(pid=id)
     prod.delete()
     return redirect('products:details')
+
+

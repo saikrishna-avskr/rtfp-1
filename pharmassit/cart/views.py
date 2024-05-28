@@ -35,6 +35,7 @@ def show_cart(request):
         'quantity': new_data,
         'tot_price': tot_price,
     }
+    print(context)
     return render(request, 'cart.html', context)
 
 @require_POST
@@ -60,3 +61,104 @@ def update_tot_price():
         total += i.price
     Cart.objects.all().update(tot_price=total)
     
+def check_out(request):
+    return render(request, 'patient.html')
+
+
+def order(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        gender = request.POST.get('gender')
+        dob = request.POST.get('dob')
+        age = request.POST.get('age')
+        phone = request.POST.get('phone')
+        
+        data = Cart.objects.all().values()
+        dat = Cart.objects.values('product')
+        to_find=[i['product'] for i in dat]
+        new_data = Product.objects.filter(pid__in=to_find).values()
+        first_cart_item = Cart.objects.first()        
+        if first_cart_item is not None:
+            tot_price = first_cart_item.tot_price
+            print(tot_price)
+        else:
+            tot_price="No items in Cart"
+        
+        cart_items = Cart.objects.all()
+        product_ids = [item.product.pid for item in cart_items]
+        products = Product.objects.filter(pid__in=product_ids)
+
+        context = {
+            'cart': data,
+            'quantity': new_data,
+            'tot_price': tot_price,
+            'name':name,
+            'gender':gender,
+            'dob':dob,
+            'age':age,
+            'phone':phone,
+        }
+        print(context)
+        for product in products:
+            cart_item = cart_items.get(product__pid=product.pid)
+            product.stock -= cart_item.quantity 
+            product.save()
+        return render(request, 'invoice.html', context)
+        
+    return render(request,'patient.html')
+
+def del_cart(request):
+    Cart.objects.all().delete()
+    return redirect('products:details')
+
+"""def order(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        gender = request.POST.get('gender')
+        dob = request.POST.get('dob')
+        age = request.POST.get('age')
+        phone = request.POST.get('phone')
+        
+        data = Cart.objects.all().values()
+        dat = Cart.objects.values('product')
+        to_find=[i['product'] for i in dat]
+        new_data = Product.objects.filter(pid__in=to_find).values()
+        first_cart_item = Cart.objects.first()        
+        if first_cart_item is not None:
+            tot_price = first_cart_item.tot_price
+            print(tot_price)
+        else:
+            tot_price="No items in Cart"
+        
+        cart_items = Cart.objects.all()
+        product_ids = [item.product_id for item in cart_items]
+        products = Product.objects.filter(pid__in=product_ids)
+
+        context = {
+            'cart': data,
+            'quantity': new_data,
+            'tot_price': tot_price,
+            'name':name,
+            'gender':gender,
+            'dob':dob,
+            'age':age,
+            'phone':phone,
+        }
+        print(context)
+        for product in products:
+            cart_item = cart_items.get(product_id=product.pid)
+            product.stock -= cart_item.quantity 
+            product.save()
+        
+        print(context)
+        cart_items.delete()
+        
+        return render(request, 'invoice.html', context)
+        
+        
+        
+                
+        
+    return render(request,'patient.html')
+    
+"""
