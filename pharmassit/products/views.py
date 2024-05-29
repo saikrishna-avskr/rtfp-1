@@ -8,6 +8,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from PIL import Image
+import pytesseract
+pytesseract.pytesseract.tesseract_cmd='C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 
 def index(request):
     return render(request,'index.html')
@@ -59,4 +62,10 @@ def remove_product(request,pid):
     prod.delete()
     return redirect('products:details')
 
+def add_presc(request,file):
+    if request.method == 'POST':
+        name = request.POST.get(file)
+    im=Image.open(name)
+    text=pytesseract.image_to_string(im, lang='eng')
+    return text
 
