@@ -22,7 +22,7 @@
         <li><a href="http://127.0.0.1:8000/">Home</a></li>
         <li><a href="http://127.0.0.1:8000/admin/">Admin</a></li>
         <li class="active"><a href="http://127.0.0.1:8000/products/details/">Details</a></li>
-        <li><a href="#">Orders</a></li>
+        <li><a href="{% url 'products:show_upload' %}">Orders</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="{% url 'cart:show_cart' %}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> View Cart</a></li>

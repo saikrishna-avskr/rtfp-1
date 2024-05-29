@@ -62,10 +62,12 @@ def remove_product(request,pid):
     prod.delete()
     return redirect('products:details')
 
-def add_presc(request,file):
+def show_upload(request):
+    return render(request,'selectFile.html')
+
+def upload_report(request):
     if request.method == 'POST':
-        name = request.POST.get(file)
-    im=Image.open(name)
-    text=pytesseract.image_to_string(im, lang='eng')
-    return text
+        name = request.POST.get('file')
+    print(name)
+    return render(request,'details.html')
 
