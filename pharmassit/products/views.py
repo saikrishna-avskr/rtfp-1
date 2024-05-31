@@ -11,6 +11,9 @@ from dateutil.relativedelta import relativedelta
 from PIL import Image
 import pytesseract
 pytesseract.pytesseract.tesseract_cmd='C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 def index(request):
     return render(request,'index.html')
@@ -67,7 +70,26 @@ def show_upload(request):
 
 def upload_report(request):
     if request.method == 'POST':
-        name = request.POST.get('file')
-    print(name)
-    return render(request,'details.html')
+        handle_uploaded_file(request.FILES["myfile"])
+        return render(request,'details.html')
+    else:
+        return render(request,'selectFile.html')
 
+def handle_uploaded_file(f):
+    with open(BASE_DIR/"name.png", "wb+") as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+    text = pytesseract.image_to_string(Image.open(BASE_DIR/"name.png"))
+    words = text.split(' ')
+    
+    for word in words:
+        products = Product.objects.filter(Q(name__icontains=word) | Q(generic_name__icontains=word))
+        for product in products:
+            # Add product to cart
+            cart_item, created = Cart.objects.get_or_create(product=product, defaults={'quantity': 1, 'price': product.price, 'tot_price': product.price})
+            if not created:
+                # If the cart item already exists, increase the quantity
+                cart_item.quantity += 1
+                cart_item.tot_price += product.price
+                cart_item.save()
+    print(text)

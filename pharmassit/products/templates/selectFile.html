@@ -10,10 +10,10 @@
     <h3 class="text-center">Add Prescreption/Invoice</h3>
     <br><br><br>
     <div class="text-center" >
-        <form method="POST" action="{% url 'products:upload_report' %}">
+        <form method="POST" action="{% url 'products:upload_report' %}" enctype="multipart/form-data">
             {% csrf_token %}
-            <label for="file"><b>Select a file:</b></label>
-            <input type="file" name="file">
+            <label><b>Select a file:</b></label>
+            <input type="file" name="myfile">
             <br><br>
             <button class="btn btn-success" type="submit">Upload</button>
         </form>
