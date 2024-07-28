@@ -26,8 +26,7 @@ def show_cart(request):
     new_data = Product.objects.filter(pid__in=to_find).values()
     first_cart_item = Cart.objects.first()
     if first_cart_item is not None:
-        tot_price = first_cart_item.tot_price
-        print(tot_price)
+        tot_price = round(first_cart_item.tot_price,2)
     else:
         tot_price="No items in Cart"
     context = {

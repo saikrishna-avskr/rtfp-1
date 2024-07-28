@@ -83,13 +83,15 @@ def handle_uploaded_file(f):
     words = text.split(' ')
     
     for word in words:
-        products = Product.objects.filter(Q(name__icontains=word) | Q(generic_name__icontains=word))
-        for product in products:
-            # Add product to cart
-            cart_item, created = Cart.objects.get_or_create(product=product, defaults={'quantity': 1, 'price': product.price, 'tot_price': product.price})
-            if not created:
-                # If the cart item already exists, increase the quantity
-                cart_item.quantity += 1
-                cart_item.tot_price += product.price
-                cart_item.save()
+        if len(word) == 8: 
+            products = Product.objects.filter(Q(name__icontains=word) | Q(generic_name__icontains=word))
+            print(products)
+            for product in products:
+                
+                cart_item, created = Cart.objects.get_or_create(product_id=product.pid, defaults={'quantity': 1, 'price': product.price, 'tot_price': product.price})
+                if not created:
+                    # If the cart item already exists, increase the quantity
+                    cart_item.quantity += 1
+                    cart_item.tot_price += product.price
+                    cart_item.save()
     print(text)
