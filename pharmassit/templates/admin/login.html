@@ -1,0 +1,125 @@
+{% extends "admin/login.html" %}
+{% load i18n static %}
+
+{% block extrahead %}
+{{ block.super }}
+<style>
+    .demo-credentials {
+        background-color: #e7f3ff;
+        border: 2px solid #2196F3;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .demo-credentials h3 {
+        color: #1976D2;
+        margin: 0 0 10px 0;
+        font-size: 18px;
+    }
+    .demo-credentials p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: #333;
+    }
+    .demo-credentials .credentials {
+        background-color: #f5f5f5;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+        font-family: monospace;
+        font-weight: bold;
+    }
+    
+    .demo-credentials .note {
+        font-size: 12px;
+        color: #666;
+        font-style: italic;
+        margin-top: 10px;
+    }
+    @media (prefers-color-scheme: dark) {
+        .demo-credentials .credentials {
+            background-color: #2a2a2a;
+            color: #fff;
+        }
+    }
+    @media (prefers-color-scheme: light) {
+        .demo-credentials .credentials {
+            background-color: #f5f5f5;
+            color: #000;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+{% if form.errors and not form.non_field_errors %}
+    <p class="errornote">
+    {% if form.errors.items|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+    </p>
+{% endif %}
+
+{% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+        <p class="errornote">
+            {{ error }}
+        </p>
+    {% endfor %}
+{% endif %}
+
+<div id="content-main">
+    <!-- Demo Credentials Box -->
+    <div class="demo-credentials">
+        <h3>🔐 Demo Login Credentials</h3>
+        <p>Use the following credentials to access the admin panel:</p>
+        <div class="credentials">
+            <strong>Username:</strong> admin<br>
+            <strong>Password:</strong> Admin@1234
+        </div>
+        <p class="note">
+            ℹ️ These are demo credentials for testing purposes only.
+        </p>
+    </div>
+
+    {% if user.is_authenticated %}
+        <p class="errornote">
+        {% blocktrans trimmed %}
+            You are authenticated as {{ username }}, but are not authorized to
+            access this page. Would you like to login to a different account?
+        {% endblocktrans %}
+        </p>
+    {% endif %}
+
+    <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+      <div class="form-row">
+        {{ form.username.errors }}
+        {{ form.username.label_tag }} {{ form.username }}
+      </div>
+      <div class="form-row">
+        {{ form.password.errors }}
+        {{ form.password.label_tag }} {{ form.password }}
+        <input type="hidden" name="next" value="{{ next }}">
+      </div>
+      {% url 'admin_password_reset' as password_reset_url %}
+      {% if password_reset_url %}
+      <div class="password-reset-link">
+        <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>
+      </div>
+      {% endif %}
+      <div class="submit-row">
+        <label>&nbsp;</label><input type="submit" value="{% trans 'Log in' %}">
+      </div>
+    </form>
+
+    <script type="text/javascript">
+    document.getElementById('id_username').focus()
+    
+    // Auto-fill demo credentials on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('id_username').value = 'admin';
+        document.getElementById('id_password').value = 'Admin@1234';
+    });
+    </script>
+</div>
+{% endblock %}

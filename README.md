@@ -2,6 +2,15 @@
 
 A comprehensive Django-based pharmacy management system with shopping cart functionality and OCR (Optical Character Recognition) capabilities for prescription processing.
 
+## 🚀 Quick Start Demo
+
+**Try the demo immediately after setup:**
+
+1. Run the development server: `python manage.py runserver`
+2. Go to admin panel: `http://127.0.0.1:8000/admin/`
+3. **Login with**: Username: `admin` | Password: `1234`
+4. Explore the pharmacy management features!
+
 ## 🚀 Features
 
 - **Product Management**: Add, view, update, and remove pharmaceutical products
@@ -117,7 +126,18 @@ python manage.py runserver
 
 The application will be available at `http://127.0.0.1:8000`
 
-## 📁 Project Structure
+## � Demo Login Credentials
+
+For demonstration purposes, use the following credentials to access the admin panel:
+
+**Admin Login**:
+
+- **Username**: `admin`
+- **Password**: `Admin@1234`
+
+_Note: These are demo credentials for testing purposes only. In production, use strong, unique passwords._
+
+## �📁 Project Structure
 
 ```
 rtfp-1/
@@ -219,6 +239,7 @@ pytesseract.pytesseract.tesseract_cmd = 'path/to/tesseract.exe'
 ### Admin Users
 
 - Access Django admin panel at `/admin/`
+- **Demo Login**: Username: `admin`, Password: `1234`
 - Manage products, inventory, and system settings
 - View reports and analytics
 
