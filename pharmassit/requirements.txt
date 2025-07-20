@@ -4,4 +4,4 @@ mysqlclient
 pillow
 pytesseract
 gunicorn
-psycopg2-binary
+python-dotenv
