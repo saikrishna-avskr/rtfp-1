@@ -1,3 +1,7 @@
 django
 python-dateutil
 mysqlclient
+pillow
+pytesseract
+gunicorn
+psycopg2-binary

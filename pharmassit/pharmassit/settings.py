@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import dotenv
+import os
+
+# Load environment variables from .env file
+dotenv.load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2fb8(476t4o0uhzaiov74yh*9hatt+wy4hrjc$gfs_5zx0^bo$'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
 
 # Application definition
@@ -77,16 +82,12 @@ WSGI_APPLICATION = 'pharmassit.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',  
-        'NAME': 'pharmassist',                     
-        'USER': 'avnadmin',
-        'PASSWORD': 'AVNS_fiPeV_A5GVfBKGw81Cf',
-        'HOST': 'mysql-3cda93f-pharmassist.i.aivencloud.com', 
-        'PORT': '27768',
-        'OPTIONS':  {
-            'ssl': {'ssl-ca': BASE_DIR/'ca.pem',
-            }
-        }
+        'ENGINE': os.getenv('DB_ENGINE'),  
+        'NAME': os.getenv('DB_NAME'),                     
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'), 
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 
@@ -126,6 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
