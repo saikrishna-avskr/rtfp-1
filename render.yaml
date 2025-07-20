@@ -4,6 +4,6 @@ services:
     env: python
     plan: free
     buildCommand: "./build.sh"
-    startCommand: "gunicorn pharmassit.pharmassit.wsgi:application"
+    startCommand: "gunicorn pharmassit.wsgi:application"
     envVars:
       - fromDotEnv: true
