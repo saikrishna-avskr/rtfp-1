@@ -1,9 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.log
+
+# Virtual Environments
+env/
+venv/
+ENV/
+.venv/
+.Python
+
+# Django SQLite Database (only if you're not using it in production)
+*.sqlite3
+
+# Django migrations (optional: if you want to reset frequently)
+**/migrations/__pycache__/
+**/migrations/*.pyc
+**/migrations/*.pyo
+
+# Secrets and environment
 .env
-.venv
+.env.*
+
+# Static and media (optional if using collectstatic)
+staticfiles/
+media/
+
+# VSCode, PyCharm, other IDEs
+.vscode/
+.idea/
+*.swp
+
+# Byte-compiled and cache
 *.pyc
-__pycache__
 *.pyo
 *.pyd
-*.db
-*.sqlite3
-*.log
+__pycache__/
+
+# Test coverage
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+
+# Gunicorn socket/logs
+gunicorn.sock
+*.pid
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Render build artifacts (optional)
+build/
