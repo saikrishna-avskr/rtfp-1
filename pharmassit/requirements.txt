@@ -5,3 +5,4 @@ pillow
 pytesseract
 gunicorn
 python-dotenv
+whitenoise
